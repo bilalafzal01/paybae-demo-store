@@ -21,7 +21,7 @@ if (isProduction) {
 
 const MyApp = ({ Component, pageProps }) => (
   <Fragment>
-    <Toaster position='bottom-center' />
+    <Toaster />
     <Component {...pageProps} />
   </Fragment>
 )

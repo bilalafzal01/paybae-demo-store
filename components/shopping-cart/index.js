@@ -35,8 +35,8 @@ const ShoppingCart = () => {
             description: `${item.name} - ${item.size}`,
           }))
         ),
-        successUrl: 'http://localhost:3000/success',
-        failureUrl: 'http://localhost:3000/failure',
+        successUrl: `${window.location.origin}/success`,
+        failureUrl: '${window.location.origin}/failure',
         products: cartItems.map((item) => ({
           id: item.id,
           name: item.name,
@@ -48,12 +48,17 @@ const ShoppingCart = () => {
     }
 
     const headers = {
-      'Content-Type': 'application/json',
-      ApiKey: 'pk_dev_26026b43-541a-4a08-9188-c806c26b3876',
+      apikey: 'pk_dev_26026b43-541a-4a08-9188-c806c26b3876',
     }
 
     try {
-      const { data } = await axios.post(url, variables, headers)
+      const { data } = await axios({
+        method: 'POST',
+        url,
+        data: JSON.stringify(variables),
+        headers,
+      })
+      console.log(data)
       toast.success(`Payment endpoint created!`)
 
       if (data.statusCode === 200) {
