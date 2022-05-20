@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 
 import CheckoutStatus from '../../components/checkout-status'
 import Item from './item'
+import { useEffect } from 'react'
 
 const ShoppingCart = () => {
   const { cartItems } = useSelector((state) => state.cart)
@@ -18,49 +19,46 @@ const ShoppingCart = () => {
     return totalPrice
   })
 
+  console.log(cartItems)
   // TODO: Bilal - add the checkout endpoint here
   const handlePaymentClick = async () => {
     const url = `https://gi46gicwmhxvqz5nztipbf4xny0bejop.lambda-url.us-east-1.on.aws`
     const variables = {
       arguments: {
         vendorId: '71dc1710-d3e6-4fee-ac31-97de899ce958',
-        metadata: 'some data',
-        successUrl: 'checkout.paybae.io',
-        failureUrl: 'checkout.paybae.io/failure',
-        products: [
-          {
-            id: '407a919e-f739-4691-b60b-7b0f67704f3f',
-            name: 'test 1',
-            price: 4.4,
-            quantity: 3,
-            description: 'some product',
-          },
-          {
-            id: '407a919e-f739-4691-b60b-7b0f6770s4rh',
-            name: 'test 2',
-            price: 2.4,
-            quantity: 3,
-            description: 'some product',
-          },
-          {
-            id: '407a919e-f739-4691-b60b-7b0f6770adv5',
-            name: 'test 3',
-            price: 1.4,
-            quantity: 3,
-            description: 'some product',
-          },
-        ],
+        metadata: JSON.stringify(
+          cartItems.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.count,
+            description: `${item.name} - ${item.size}`,
+          }))
+        ),
+        successUrl: 'http://localhost:3000/success',
+        failureUrl: 'http://localhost:3000/failure',
+        products: cartItems.map((item) => ({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity: item.count,
+          description: `${item.name} - ${item.size}`,
+        })),
       },
     }
 
     const headers = {
       'Content-Type': 'application/json',
-      ApiKey: '',
+      ApiKey: 'pk_dev_26026b43-541a-4a08-9188-c806c26b3876',
     }
 
     try {
       const { data } = await axios.post(url, variables, headers)
-      toast.success(data)
+      toast.success(`Payment endpoint created!`)
+
+      if (data.statusCode === 200) {
+        window.location.href = data.body.url
+      }
     } catch (err) {
       console.log(err)
       toast.error('Something went wrong!')
