@@ -151,7 +151,7 @@ const CheckoutPage = () => {
               <button type='button' className='btn btn--rounded btn--border'>
                 Continue shopping
               </button>
-              <button onClick={handlePaymentClick} type='button' className='btn btn--rounded btn--yellow'>
+              <button type='button' className='btn btn--rounded btn--yellow'>
                 Proceed to payment
               </button>
             </div>
