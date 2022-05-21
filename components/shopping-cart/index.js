@@ -23,6 +23,7 @@ const ShoppingCart = () => {
   // TODO: Bilal - add the checkout endpoint here
   const handlePaymentClick = async () => {
     const url = `https://gi46gicwmhxvqz5nztipbf4xny0bejop.lambda-url.us-east-1.on.aws`
+
     const variables = {
       arguments: {
         vendorId: '71dc1710-d3e6-4fee-ac31-97de899ce958',
@@ -32,18 +33,20 @@ const ShoppingCart = () => {
             name: item.name,
             price: item.price,
             quantity: item.count,
-            description: `${item.name} - ${item.size}`,
           }))
         ),
         successUrl: `${window.location.origin}/success`,
         failureUrl: `${window.location.origin}/failure`,
-        products: cartItems.map((item) => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          quantity: item.count,
-          description: `${item.name} - ${item.size}`,
-        })),
+        products: JSON.stringify(
+          cartItems.map((item) => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.count,
+            description: `${item.name} - ${item.size}`,
+            image: `https://paybae-demo-store.vercel.app${item.thumb}`,
+          }))
+        ),
       },
     }
 
@@ -58,11 +61,10 @@ const ShoppingCart = () => {
         data: JSON.stringify(variables),
         headers,
       })
-      console.log(data)
       toast.success(`Payment endpoint created!`)
 
       if (data.statusCode === 200) {
-        window.location.href = data.body.url
+        window.location.href = data.body.redirectUrl
       }
     } catch (err) {
       console.log(err)
