@@ -68,7 +68,10 @@ const ShoppingCart = () => {
       setIsProcessing(false)
 
       if (data.statusCode === 200) {
-        window.location.href = data.body.redirectUrl
+        // * wait 2 seconds before redirecting to the payment endpoint
+        setTimeout(() => {
+          window.location.href = data.data.url
+        }, 2000)
       }
     } catch (err) {
       console.log(err)
