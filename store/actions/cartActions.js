@@ -6,14 +6,14 @@ export const addProduct = ({ thumb, name, price, count, color, size, id }) => ({
   count,
   color,
   size,
-  id
+  id,
 })
 
 export const removeProduct = ({ color, size, id }) => ({
   type: 'REMOVE_PRODUCT',
   color,
   size,
-  id
+  id,
 })
 
 export const setCount = ({ color, size, id, count }) => ({
@@ -21,5 +21,9 @@ export const setCount = ({ color, size, id, count }) => ({
   color,
   size,
   count,
-  id
+  id,
+})
+
+export const resetCart = () => ({
+  type: 'RESET_CART',
 })
