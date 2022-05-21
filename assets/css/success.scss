@@ -11,15 +11,16 @@
 .success__root__container {
   padding: 1.5rem;
   background-color: #ffffff;
-  max-width: 600px;
 
   border-radius: 0.5rem;
+  max-width: 90%;
 
   //   * drop shadow
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
 
   @media (min-width: 768px) {
     margin: 0 auto;
+    max-width: 600px;
   }
 }
 
@@ -55,8 +56,8 @@
   }
 
   .subtext {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
     color: #4b5563;
   }
 
