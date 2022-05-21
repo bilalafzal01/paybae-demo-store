@@ -1,12 +1,13 @@
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
 import CheckoutStatus from '../../components/checkout-status'
 import Item from './item'
-import { useEffect } from 'react'
 
 const ShoppingCart = () => {
+  const [isProcessing, setIsProcessing] = useState(false)
   const { cartItems } = useSelector((state) => state.cart)
 
   const priceTotal = useSelector((state) => {
@@ -22,6 +23,7 @@ const ShoppingCart = () => {
   console.log(cartItems)
   // TODO: Bilal - add the checkout endpoint here
   const handlePaymentClick = async () => {
+    setIsProcessing(true)
     const url = `https://gi46gicwmhxvqz5nztipbf4xny0bejop.lambda-url.us-east-1.on.aws`
 
     const variables = {
@@ -63,12 +65,15 @@ const ShoppingCart = () => {
       })
       toast.success(`Payment endpoint created!`)
 
+      setIsProcessing(false)
+
       if (data.statusCode === 200) {
         window.location.href = data.body.redirectUrl
       }
     } catch (err) {
       console.log(err)
       toast.error('Something went wrong!')
+      setIsProcessing(false)
     }
   }
 
@@ -117,8 +122,16 @@ const ShoppingCart = () => {
               //  href='/cart/checkout'
               onClick={handlePaymentClick}
               className='btn btn--rounded btn--yellow'
+              disabled={isProcessing}
             >
-              Checkout
+              {isProcessing ? (
+                <>
+                  <i className='icon-spinner icon-spin'></i>
+                  Processing
+                </>
+              ) : (
+                `Checkout`
+              )}
             </button>
           </div>
         </div>

@@ -278,6 +278,13 @@ h5 {
       background-color: var(--color-orange);
     }
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    // * gray background
+    background: #e5e5e5 !important;
+  }
 }
 
 .site-logo {
