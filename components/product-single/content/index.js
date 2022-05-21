@@ -41,8 +41,6 @@ const Content = ({ product }) => {
     )
   }
 
-  console.log({ product })
-
   return (
     <section className='product-content'>
       <div className='product-content__intro'>

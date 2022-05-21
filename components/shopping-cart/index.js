@@ -70,7 +70,7 @@ const ShoppingCart = () => {
       if (data.statusCode === 200) {
         // * wait 2 seconds before redirecting to the payment endpoint
         setTimeout(() => {
-          window.location.href = data.data.url
+          window.location.href = data.body.redirectUrl
         }, 2000)
       }
     } catch (err) {
