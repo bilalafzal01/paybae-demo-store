@@ -36,7 +36,7 @@ const ShoppingCart = () => {
           }))
         ),
         successUrl: `${window.location.origin}/success`,
-        failureUrl: '${window.location.origin}/failure',
+        failureUrl: `${window.location.origin}/failure`,
         products: cartItems.map((item) => ({
           id: item.id,
           name: item.name,
