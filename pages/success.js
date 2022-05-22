@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import { resetCart } from '../store/actions/cartActions'
 import Layout from '../layouts/Main'
 import Footer from '../components/footer'
+import Head from 'next/head'
 
 const SuccessPage = ({ checkoutID, status }) => {
   const dispatch = useDispatch()
@@ -18,6 +19,11 @@ const SuccessPage = ({ checkoutID, status }) => {
 
   return (
     <Layout>
+      <Head>
+        <link rel='preconnect' href='https://fonts.gstatic.com' />
+
+        <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap' rel='stylesheet' />
+      </Head>
       <div className='success__root'>
         <div className='success__root__container'>
           <div className='success__root__svg__container'>
